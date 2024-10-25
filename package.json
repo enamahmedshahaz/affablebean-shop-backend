@@ -1,0 +1,20 @@
+{
+  "name": "affablebean-shop-backend",
+  "version": "1.0.0",
+  "description": "Server for the affable-bean-shop-frontend react project",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file=config.env server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Enam Ahmed Shahaz",
+  "license": "ISC",
+  "dependencies": {
+    "affablebean-shop-backend": "file:",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0"
+  }
+}
