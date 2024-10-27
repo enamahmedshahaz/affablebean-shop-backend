@@ -120,4 +120,33 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+
+//API to check if a email is admin user
+
+router.get("/checkAdmin/:email", async (req, res) => {
+
+  try {
+    let collection = await db.collection("users");
+    
+    const email = req.params.email;
+    const query = { email: email };
+
+    const user = await collection.findOne(query);
+
+    let adminStatus = false;
+
+    if (user) {
+      adminStatus = user?.role === 'admin';
+
+      res.send({ adminStatus }).status(200);
+    } else {
+      res.status(404).json({ message: "User with email not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error while checking admin");
+  }
+});
+
+
 export default router;
