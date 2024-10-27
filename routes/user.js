@@ -13,9 +13,23 @@ const router = express.Router();
 
 // This section will help you get a list of all the records.
 router.get("/", async (req, res) => {
+
   let collection = await db.collection("users");
-  let results = await collection.find({}).toArray();
-  res.send(results).status(200);
+
+  // if query email is provided
+  if (req.query.email) {
+    const email = req.query.email;
+    const user = await collection.findOne({ email: email });
+    if (user) {
+      res.send(user).status(200);
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } else {
+    let results = await collection.find({}).toArray();
+    res.send(results).status(200);
+  }
+
 });
 
 // This section will help you get a single record by id
@@ -31,17 +45,20 @@ router.get("/:id", async (req, res) => {
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
   try {
+    console.log(req.body);
     let newDocument = {
-      name: req.body.name,
-      position: req.body.position,
-      level: req.body.level,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      profilePhotoUrl: req.body.profilePhotoUrl,
+      role: req.body.role,
     };
     let collection = await db.collection("users");
     let result = await collection.insertOne(newDocument);
     res.send(result).status(204);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error adding record");
+    res.status(500).send("Error adding user");
   }
 });
 
