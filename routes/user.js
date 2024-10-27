@@ -83,6 +83,25 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+// This section will help you update a record by id.
+router.patch("/changeRole/:id", async (req, res) => {
+  try {
+    const query = { _id: new ObjectId(req.params.id) };
+    const updates = {
+      $set: {
+        role: 'New Role',
+      },
+    };
+
+    let collection = await db.collection("users");
+    let result = await collection.updateOne(query, updates);
+    res.send(result).status(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error updating record");
+  }
+});
+
 // This section will help you delete a record
 router.delete("/:id", async (req, res) => {
   try {
