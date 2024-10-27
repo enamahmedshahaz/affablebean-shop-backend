@@ -3,6 +3,7 @@ import cors from "cors";
 import users from "./routes/user.js";
 import categories from "./routes/category.js";
 import products from "./routes/product.js";
+import purchase from "./routes/purchase.js";
 
 
 
@@ -16,7 +17,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/user", users); // Mount the user routes at /user
 app.use("/category", categories); // Mount the category routes at /category
-app.use("/product", products); // Mount the category routes at /category
+app.use("/product", products); 
+app.use("/purchase", purchase); 
+
 
 
 

@@ -87,9 +87,12 @@ router.patch("/:id", async (req, res) => {
 router.patch("/changeRole/:id", async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
+
+    const role = req.query.role;
+    const newRole = role === 'admin' ? 'user' : 'admin';
     const updates = {
       $set: {
-        role: 'New Role',
+        role: newRole
       },
     };
 
